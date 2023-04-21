@@ -39,7 +39,7 @@ export type tb_driverId = tb_driverModel[tb_driverPk]
 export type tb_driverOptionalAttributes = 'name' | 'sex' | 'photo' | 'pid' | 'birthday' | 'tel' | 'email' | 'mail_address' | 'contact_name' | 'contact_tel' | 'real_auth' | 'idcard_address' | 'idcard_expiration' | 'idcard_front' | 'idcard_back' | 'idcard_holding' | 'drcard_type' | 'drcard_expiration' | 'drcard_issue_date' | 'drcard_front' | 'drcard_back' | 'drcard_holding' | 'home' | 'summary' | 'create_time'
 export type tb_driverCreationAttributes = Optional<tb_driverAttributes, tb_driverOptionalAttributes>
 
-export class tb_driverModel extends Model<tb_driverAttributes, tb_driverCreationAttributes> implements tb_driverAttributes {
+export default class tb_driverModel extends Model {
   id!: number
   open_id!: string
   nickname!: string
@@ -77,6 +77,7 @@ export class tb_driverModel extends Model<tb_driverAttributes, tb_driverCreation
         type: DataTypes.BIGINT,
         allowNull: false,
         primaryKey: true,
+        autoIncrement: true,
         comment: '主键'
       },
       open_id: {
@@ -229,7 +230,7 @@ export class tb_driverModel extends Model<tb_driverAttributes, tb_driverCreation
       }
     }, {
       sequelize,
-      tableName: 'tb_driverModel',
+      tableName: 'tb_driver',
       timestamps: false,
       indexes: [
         {

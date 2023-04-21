@@ -1,21 +1,11 @@
-import { tb_driverModel } from './tb_driver.model'
-import { Sequelize } from 'sequelize'
-import { config } from '../../common/configuration/config'
-const userSystemModels = [tb_driverModel]
+import tb_driverModel from './tb_driver.model'
+import tb_driver_settingsModel from './tb_driver_settings'
+import { sequelize_DR } from '../../db'
 
-const sequelize = new Sequelize('', '', '', {
-  dialect: config.DB.TYPE,
-  database: config.DB.DATABASE,
-  username: config.DB.USERNAME,
-  password: config.DB.PASSWORD,
-  port: config.DB.PORT,
-  host: config.DB.HOST,
-})
-
-const models = [...userSystemModels]
+const models = [tb_driverModel, tb_driver_settingsModel]
 
 models.forEach((model) => {
-  model.initModel(sequelize)
+  model.initModel(sequelize_DR)
 })
 
-export default sequelize
+export default sequelize_DR

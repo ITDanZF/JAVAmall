@@ -9,7 +9,7 @@ export interface Config {
     TYPE: Dialect
     HOST: string
     PORT: number
-    DATABASE: string
+    DATABASE_DR: string
     USERNAME: string
     PASSWORD: string
   }
@@ -21,8 +21,8 @@ export const config: Config = {
     TYPE: (process.env.DB_TYPE as Dialect) ?? 'mysql',
     HOST: process.env.DB_HOST ?? '127.0.0.1',
     PORT: process.env.DB_PORT ? toNumber(process.env.DB_PORT) : 3306,
-    DATABASE: process.env.DB_DATABASE ?? '',
     USERNAME: process.env.DB_USERNAME ?? 'root',
-    PASSWORD: process.env.DB_PASSWORD ?? 'root',
+    PASSWORD: process.env.DB_PASSWORD ?? '123456',
+    DATABASE_DR: process.env.DB_DATABASE_DRIVER ?? '',
   }
 }

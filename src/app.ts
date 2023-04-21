@@ -5,8 +5,14 @@ import { config } from './common/configuration/config'
 import router from './routes'
 import { ApiException } from './common/exception/api.exception'
 import HttpStatusCode from './common/constant/http-code.constants'
-import sequelize from './db/index'
+
+import sequelize_DR from './user/models/index'
+
 const app = new Koa()
+
+app.context.orm = {
+  sequelize_DR
+}
 
 // app.context.orm = sequelize
 app
@@ -27,7 +33,7 @@ app
       ctx.status = code
       ctx.body = {
         status: code,
-        message: message,
+        message,
         data: {}
       }
     }
