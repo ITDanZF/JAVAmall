@@ -9,7 +9,7 @@ import { token2UserInfo } from '../common/util/user.utils'
  * @param next
  */
 export const tokenRequired = async (ctx: Context, next: Next) => {
-  const token = ctx.headers['token'] as string ?? ctx.cookies.get('token')
+  const token = ctx.headers.token as string ?? ctx.cookies.get('token')
   if (!token) {
     throw new ApiException(HttpStatusCode.UNAUTHORIZED, 'require login')
   }

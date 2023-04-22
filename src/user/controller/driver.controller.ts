@@ -4,13 +4,23 @@ import DriverSettingService from '../service/driver_settings.service'
 import { getToken, getOpenId } from '../../common/util/user.utils'
 import { ApiException } from '../../common/exception/api.exception'
 import HttpStatusCode from '../../common/constant/http-code.constants'
+import WalletService from '../service/wallet.service'
 class UserController {
   /**
      * login
      * @param ctx
      */
   login = async (ctx: Context) => {
-
+    const { code } = ctx.loginDriverInfo
+    const res = await getOpenId(code)
+    const { openid } = res
+    const driverIno = await DriverService.selectLoginDriverByOpenId(openid)
+    console.log(driverIno)
+    ctx.body = {
+      status: 200,
+      message: '用户登录成功',
+      data: driverIno
+    }
   }
 
   /**
@@ -21,17 +31,14 @@ class UserController {
     const { code, photo, nickname } = ctx.registerDriverInfo
     const res = await getOpenId(code)
     const { openid } = res
-    if (!openid) {
-      throw new ApiException(HttpStatusCode.BAD_REQUEST, '临时登陆凭证错误')
-    }
+
     const userInfo = await DriverService.getDriverUserInfo(openid, 0)
-    if (userInfo) {
-      throw new ApiException(HttpStatusCode.BAD_REQUEST, '该微信无法注册')
-    }
+    if (userInfo) { throw new ApiException(HttpStatusCode.BAD_REQUEST, '该微信无法注册') }
+
     const newDrivers = await DriverService.insertDriverInfo(
-      code, photo, nickname
+      openid, photo, nickname
     )
-    const setDriverSettings = await DriverSettingService.newDriverSetting(newDrivers.id, {
+    await DriverSettingService.newDriverSetting(newDrivers.id, {
       orientation: '',
       listenService: true,
       orderDistance: 0,
@@ -39,12 +46,17 @@ class UserController {
       autoAccept: false
     })
 
-    console.log(setDriverSettings, '???????//')
+    await WalletService.inertIntoWallet(newDrivers.id, 0, null)
 
+    const newToken = getToken({
+      id: JSON.stringify(newDrivers.id)
+    })
     ctx.body = {
       status: 200,
       message: '用户注册成功',
-      data: ''
+      data: {
+        token: newToken
+      }
     }
   }
 }

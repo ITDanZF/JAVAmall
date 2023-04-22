@@ -1,5 +1,5 @@
 import Router from '@koa/router'
-import { validateRegisterDriverInfo } from '../../../middleware/user/driver.middleware'
+import { validateLoginDriverInfo, validateRegisterDriverInfo } from '../../../middleware/user/driver.middleware'
 import DriverController from '../../../user/controller/driver.controller'
 
 const router = new Router({
@@ -7,8 +7,8 @@ const router = new Router({
 })
 
 router.post(
-  '/login',
-  validateRegisterDriverInfo,
+  '/driverLogin',
+  validateLoginDriverInfo,
   DriverController.login
 )
 

@@ -11,6 +11,11 @@ declare module 'koa' {
      * 司机注册上下文
      */
     registerDriverInfo: any,
+
+    /**
+     * 司机登录上下文
+     */
+    loginDriverInfo: any
     orm: Sequelize
   }
 }

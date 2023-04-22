@@ -1,13 +1,13 @@
-import crypto from "crypto"
+import crypto from 'crypto'
 import SECRET_KEY from '../constant/secret-key.constants'
-import {string} from "joi";
+import { string } from 'joi'
 
-function _md5(content: string) {
-    const md5 = crypto.createHash('md5')
-    return md5.update(content).digest('hex')
+function _md5 (content: string) {
+  const md5 = crypto.createHash('md5')
+  return md5.update(content).digest('hex')
 }
 
 export const doCrypto = (password: string): string => {
-    const str = `password=${password}&key=${SECRET_KEY.CRYPTO_SECRET_KEY}`
-    return _md5(str)
+  const str = `password=${password}&key=${SECRET_KEY.CRYPTO_SECRET_KEY}`
+  return _md5(str)
 }

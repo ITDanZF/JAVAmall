@@ -1,4 +1,5 @@
 import { isEmpty } from 'lodash'
+import {Op} from 'sequelize'
 import HttpStatusCode from '../../common/constant/http-code.constants'
 import { ApiException } from '../../common/exception/api.exception'
 import tb_driverModel from '../models/tb_driver.model'
@@ -28,9 +29,25 @@ class DriverService {
     })
   }
 
-  async insertDriverInfo (code: string, photo: string, nickname: string) {
+  /**
+   * 查询用户是否完成登录
+   * @param openid
+   */
+  async selectLoginDriverByOpenId (openid: string) {
+    return tb_driverModel.findOne({
+      attributes: ['id', 'real_auth', 'archive'],
+      where: {
+        status: {
+          [Op.ne]: 2 //  不等于2
+        },
+        open_id: openid
+      }
+    })
+  }
+
+  async insertDriverInfo (openid: string, photo: string, nickname: string) {
     return tb_driverModel.create({
-      open_id: code,
+      open_id: openid,
       photo,
       nickname,
       status: 1,
