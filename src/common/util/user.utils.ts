@@ -3,8 +3,8 @@ import jwt, { sign } from 'jsonwebtoken'
 import SECRET_KEY from '../constant/secret-key.constants'
 
 import axios from 'axios'
-import {ApiException} from "../exception/api.exception";
-import HttpStatusCode from "../constant/http-code.constants";
+import { ApiException } from '../exception/api.exception'
+import HttpStatusCode from '../constant/http-code.constants'
 
 export const token2UserInfo = (token: string): any => {
   if (!token) return null

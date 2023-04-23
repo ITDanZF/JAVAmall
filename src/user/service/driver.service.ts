@@ -1,19 +1,11 @@
 import { isEmpty } from 'lodash'
-import {Op} from 'sequelize'
+import { Op } from 'sequelize'
 import HttpStatusCode from '../../common/constant/http-code.constants'
 import { ApiException } from '../../common/exception/api.exception'
 import tb_driverModel from '../models/tb_driver.model'
 import { TokenUserInfo } from '../dto/user.dto'
 
 class DriverService {
-  /**
-     * 用户注册
-     * @param dto
-     */
-  async createUser (dto: TokenUserInfo) {
-
-  }
-
   /**
    * 获取用户信息
    * @param openid

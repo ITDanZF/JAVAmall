@@ -1,7 +1,7 @@
 import { Context, Next } from 'koa'
 import HttpStatusCode from '../../common/constant/http-code.constants'
 import { ApiException } from '../../common/exception/api.exception'
-import {driverLoginSchema, driverRegisterSchema } from '../../user/schema/driver.schema'
+import { driverLoginSchema, driverRegisterSchema } from '../../user/schema/driver.schema'
 
 /**
  * 校验司机注册的参数

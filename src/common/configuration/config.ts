@@ -13,6 +13,12 @@ export interface Config {
     USERNAME: string
     PASSWORD: string
   }
+  REDIS: {
+    HOST: string
+    PORT: number
+    USERNAME: string
+    PASSWORD: string
+  }
 }
 
 export const config: Config = {
@@ -24,5 +30,11 @@ export const config: Config = {
     USERNAME: process.env.DB_USERNAME ?? 'root',
     PASSWORD: process.env.DB_PASSWORD ?? '123456',
     DATABASE_DR: process.env.DB_DATABASE_DRIVER ?? '',
+  },
+  REDIS: {
+    HOST: process.env.REDIS_HOST ?? '127.0.0.1',
+    PORT: process.env.REDIS_PORT ? toNumber(process.env.REDIS_PORT) : 6379,
+    USERNAME: process.env.REDIS_USERNAME ?? 'default',
+    PASSWORD: process.env.REDIS_PASSWORD ?? '123456',
   }
 }
