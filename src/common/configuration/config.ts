@@ -1,8 +1,7 @@
 import * as dotenv from 'dotenv'
 import { toNumber } from 'lodash'
 import { Dialect } from 'sequelize'
-dotenv.config({ path: '.env' })
-
+dotenv.config({ path: process.env.NODE_ENV === 'development' ? '.env.development' : '.env.production' })
 export interface Config {
   PORT: number
   DB: {
@@ -21,6 +20,17 @@ export interface Config {
   }
 }
 
+export interface KEY {
+  AccessKeyID: string
+  AccessKeySecret: string
+  region: string
+  bucket: string
+  OSS_URL: string
+  appid: string
+  secret: string
+  grant_type: string
+}
+
 export const config: Config = {
   PORT: process.env.PORT ? toNumber(process.env.PORT) : 7001,
   DB: {
@@ -37,4 +47,15 @@ export const config: Config = {
     USERNAME: process.env.REDIS_USERNAME ?? 'default',
     PASSWORD: process.env.REDIS_PASSWORD ?? '123456',
   }
+}
+
+export const KEYS: KEY = {
+  AccessKeyID: process.env.ACCESSKEYID ?? '',
+  AccessKeySecret: process.env.ACCESSKEYSECRET ?? '',
+  region: process.env.REGION ?? '',
+  bucket: process.env.BUCKET ?? '',
+  OSS_URL: process.env.OSS_URL ?? '',
+  appid: process.env.APPPID ?? '',
+  secret: process.env.SECRET ?? '',
+  grant_type: process.env.GRANT_TYPE ?? ''
 }

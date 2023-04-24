@@ -5,6 +5,7 @@ import SECRET_KEY from '../constant/secret-key.constants'
 import axios from 'axios'
 import { ApiException } from '../exception/api.exception'
 import HttpStatusCode from '../constant/http-code.constants'
+import {KEYS} from "../configuration/config";
 
 export const token2UserInfo = (token: string): any => {
   if (!token) return null
@@ -26,9 +27,9 @@ export const getOpenId = async (code: string): Promise<any> => {
     url: 'https://api.weixin.qq.com/sns/jscode2session',
     params: {
       js_code: code,
-      appid: SECRET_KEY.appid,
-      secret: SECRET_KEY.secret,
-      grant_type: SECRET_KEY.grant_type
+      appid: KEYS.appid,
+      secret: KEYS.secret,
+      grant_type: KEYS.grant_type
     }
   })
   if (!result.data.openid) { throw new ApiException(HttpStatusCode.BAD_REQUEST, '临时登陆凭证错误') }

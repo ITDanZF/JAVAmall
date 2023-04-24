@@ -1,17 +1,24 @@
-import OSS from 'ali-oss'
+import OSS, { STS } from 'ali-oss'
+import { KEYS } from '../common/configuration/config'
 
 /**
  * 获取阿里云存储实例对象
  * @param sts
  * @constructor
  */
-export const OssClient = (sts: any): OSS => {
-  const { AccessKeySecret, AccessKeyId, Bucket, Region } = sts
+export const OssClient = (): OSS => {
   return new OSS({
-    region: Region,
-    accessKeyId: AccessKeyId,
-    accessKeySecret: AccessKeySecret,
-    bucket: Bucket,
-    endpoint: process.env.NODE_ENV === 'production' ? `${Region}-internal.aliyuncs.com` : `${Region}.aliyuncs.com`
+    region: KEYS.region,
+    accessKeyId: KEYS.AccessKeyID,
+    accessKeySecret: KEYS.AccessKeySecret,
+    bucket: KEYS.bucket,
+    endpoint: `https://${KEYS.region}.aliyuncs.com`
+  })
+}
+
+export const STSClient = (): STS => {
+  return new STS({
+    accessKeyId: KEYS.AccessKeyID,
+    accessKeySecret: KEYS.AccessKeySecret
   })
 }
